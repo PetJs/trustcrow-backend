@@ -12,7 +12,7 @@ const Task = sequelize.define('Task',
             type: DataTypes.STRING,
             allowNull: false
         },
-        decription: {
+        description: {
             type: DataTypes.TEXT,
             allowNull: false
         }
