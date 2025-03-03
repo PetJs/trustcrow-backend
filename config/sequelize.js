@@ -1,20 +1,22 @@
-require("dotenv").config(); // Load environment variables
-
+require("dotenv").config();
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   dialectOptions: {
     ssl: {
-      require: true, 
-      rejectUnauthorized: false, 
+      require: true,
+      rejectUnauthorized: false,
     },
   },
-  logging: console.log, 
+  host: "db.gqqjgkfwtwlwhstrrrqw.supabase.co", // Ensure correct host
+  port: 5432,
+  logging: console.log,
 });
 
-sequelize.authenticate()
-  .then(() => console.log("Connected to PostgreSQL"))
-  .catch(err => console.error("Database connection error:", err));
+sequelize
+  .authenticate()
+  .then(() => console.log("✅ Database connected successfully!"))
+  .catch((err) => console.error("❌ Database connection error:", err));
 
 module.exports = sequelize;
