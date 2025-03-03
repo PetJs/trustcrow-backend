@@ -1,15 +1,20 @@
+require("dotenv").config(); // Load environment variables
+
 const { Sequelize } = require("sequelize");
 
-// Using environment variables
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   dialectOptions: {
     ssl: {
-      require: true, // Required for Supabase
-      rejectUnauthorized: false, // Bypass self-signed certs
+      require: true, 
+      rejectUnauthorized: false, 
     },
   },
-  logging: (...msg) => console.log(msg),
+  logging: console.log, 
 });
+
+sequelize.authenticate()
+  .then(() => console.log("Connected to PostgreSQL"))
+  .catch(err => console.error("Database connection error:", err));
 
 module.exports = sequelize;
