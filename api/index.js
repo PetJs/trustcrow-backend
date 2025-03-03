@@ -8,6 +8,16 @@ const app = express();
 app.use(express.json());
 
 
+async function testDB() {
+    try {
+      await sequelize.authenticate();
+      console.log("✅ Database connected successfully!");
+    } catch (error) {
+      console.error("❌ Database connection failed:", error);
+    }
+  }
+  
+testDB();
 
 
 //          GET ALL TASKS
