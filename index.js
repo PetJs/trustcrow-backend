@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const PORT = process.env.DB_PORT || 3000;
-const sequelize = require('../config/sequelize.js');
-const Task = require('../model/task.js');
+const sequelize = require('./config/sequelize.js');
+const Task = require('./model/task.js');
 
 const app = express();
 app.use(express.json());
@@ -105,17 +105,18 @@ app.delete('/delete-task/:id', async (req, res) => {
     };
 });
 
+
+
+
+
+app.listen(PORT, async (req, res) => {
+    try{
+        await sequelize.sync();
+        console.log('Connection to database has been successfully establised');
+    } catch (error) {
+        console.log('Unable to connect to database', error);
+    };
+    console.log(`Server is running on port ${PORT}`);
+});
+
 module.exports = app;
-
-
-
-
-// app.listen(PORT, async (req, res) => {
-//     try{
-//         await sequelize.sync();
-//         console.log('Connection to database has been successfully establised');
-//     } catch (error) {
-//         console.log('Unable to connect to database', error);
-//     };
-//     console.log(`Server is running on port ${PORT}`);
-// });
