@@ -34,7 +34,7 @@ app.post('/create-task', async(req, res) => {
             return res.status(400).json({message: 'All existing fields must be filled'});
         };
 
-        const findTask = await Task.findAll({where: {title, description}});
+        const findTask = await Task.findOne({where: {title, description}});
         if(findTask){
             return res.status(400).json({message:"Task already exists"});
         };
@@ -58,13 +58,16 @@ app.patch('/update-task/:id', async (req, res) => {
     const {id} = req.params;
     const {title , description} = req.body;
     try {
-        const task = await Task.findAll({where: {id}});
+        const task = await Task.findOne({where: {id}});
         if(!task){
             return res.status(404).json({message: "Task not found"});
         };
         if(!title || !description) {
             return res.status(400).json({message: "All empty fields must be filled"});
         };
+        if(title == task.title && description == task.description){
+            return res.status(400).json({message: "New details cannot be the same as previous"});
+        }
         await Task.update({title,  description}, { where: {id}});
         return res.status(200).json({message: "Task updated successfully", task})      
     } catch (error) {
@@ -75,11 +78,12 @@ app.patch('/update-task/:id', async (req, res) => {
 
 
 
+
 //                  DELETING A TASK
 app.delete('/delete-task/:id', async (req, res) => {
     const {id} = req.params;
     try{
-        const task = await Task.findAll({where: {id}});
+        const task = await Task.findOne({where: {id}});
         if(!task){
             return res.status(404).json({message: "Task not found"});
         };
@@ -90,7 +94,6 @@ app.delete('/delete-task/:id', async (req, res) => {
         console.log(error);
     };
 });
-
 
 
 
