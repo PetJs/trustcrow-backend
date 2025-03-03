@@ -95,16 +95,17 @@ app.delete('/delete-task/:id', async (req, res) => {
     };
 });
 
+module.exports = app;
 
 
 
 
-app.listen(PORT, async (req, res) => {
-    try{
-        await sequelize.sync();
-        console.log('Connection to database has been successfully establised');
-    } catch (error) {
-        console.log('Unable to connect to database', error);
-    };
-    console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, async (req, res) => {
+//     try{
+//         await sequelize.sync();
+//         console.log('Connection to database has been successfully establised');
+//     } catch (error) {
+//         console.log('Unable to connect to database', error);
+//     };
+//     console.log(`Server is running on port ${PORT}`);
+// });
